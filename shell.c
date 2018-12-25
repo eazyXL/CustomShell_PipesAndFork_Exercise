@@ -10,7 +10,7 @@
 int bpid = NULL;
 int ctrlc = 0;
 
-
+//Normalizes user input to have even spaces between words and command characters
 void evenSpace(char *line, char* final){
 	char new[1024];
 	int index = 0;
@@ -38,37 +38,30 @@ void evenSpace(char *line, char* final){
 
 }
 
+//No operators in the user input
 void zeroSym(char *line){
 
 		
-		//printf("zerSym %s\n", line);
-		char *split[20][20] = {NULL};
-		char *temp;
+	//printf("zerSym %s\n", line);
+	char *split[20][20] = {NULL};
+	char *temp;
+	temp = strtok(line, " ");
+	int i = 0;
+	while(temp != NULL){
+		strcpy(split[i], temp);
+		i++;
+		temp = strtok(NULL, " ");
+	}
 
-			temp = strtok(line, " ");
-			int i = 0;
-			while(temp != NULL){
-				strcpy(split[i], temp);
-				i++;
-				temp = strtok(NULL, " ");
-			}
-
-		char *newargs[i];
-		newargs[i] = NULL;
-		int x =i; int j;
-		for(i = 0; i < x; i++){
+	char *newargs[i];
+	newargs[i] = NULL;
+	int x =i; int j;
+	for(i = 0; i < x; i++){
 			
-			newargs[i] = malloc(strlen(split[i]) + 1);
-			
-			strcpy(newargs[i], split[i]);
-			
-			(newargs[i])[strlen(split[i])] = '\0';
-		}
-
-	//for(int n = 0; n <i; n++){
-		//printf("%i %s ", n, newargs[n]);
-	//} 
-	//printf("\n");
+		newargs[i] = malloc(strlen(split[i]) + 1);
+		strcpy(newargs[i], split[i]);
+		(newargs[i])[strlen(split[i])] = '\0';
+	}
 
 	pid_t cpid = 0;
 
@@ -103,27 +96,25 @@ void zeroSym(char *line){
 	
 }
 
-
+//One operator in the user input
 void oneSym(char *line, char *line2, char sym){
-		//printf("zerSym %s\n", line);
 
 
 	if(sym == ';'){
 		zeroSym(line);
 		zeroSym(line2);
 	}else{
-
 		//////split line 1////////////////////////////////
 		char *split[20][20] = {NULL};
 		char *temp;
 
-			temp = strtok(line, " ");
-			int i = 0;
-			while(temp != NULL){
-				strcpy(split[i], temp);
-				i++;
-				temp = strtok(NULL, " ");
-			}
+		temp = strtok(line, " ");
+		int i = 0;
+		while(temp != NULL){
+			strcpy(split[i], temp);
+			i++;
+			temp = strtok(NULL, " ");
+		}
 
 		char *newargs[i];
 		newargs[i] = NULL;
@@ -131,9 +122,7 @@ void oneSym(char *line, char *line2, char sym){
 		for(i = 0; i < x; i++){
 			
 			newargs[i] = malloc(strlen(split[i]) + 1);
-			
 			strcpy(newargs[i], split[i]);
-			
 			(newargs[i])[strlen(split[i])] = '\0';
 		}
 		//////split line 1////////////////////////////////
@@ -142,35 +131,26 @@ void oneSym(char *line, char *line2, char sym){
 		char *split2[20][20] = {NULL};
 		char *temp2;
 
-			temp2 = strtok(line2, " ");
-			int j = 0;
-			while(temp2 != NULL){
-				strcpy(split2[j], temp2);
-				j++;
-				temp2 = strtok(NULL, " ");
-			}
+		temp2 = strtok(line2, " ");
+		int j = 0;
+		while(temp2 != NULL){
+			strcpy(split2[j], temp2);
+			j++;
+			temp2 = strtok(NULL, " ");
+		}
 
 		char *newargs2[j];
 		newargs2[j] = NULL;
-		 x =j;
+		x = j;
 		for(j = 0; j < x; j++){
 			
 			newargs2[j] = malloc(strlen(split2[j]) + 1);
-			
 			strcpy(newargs2[j], split2[j]);
-			
 			(newargs2[j])[strlen(split2[j])] = '\0';
 		}
 		//////split line 2////////////////////////////////
 
-	/*for(int n = 0; n <i; n++){
-		printf("%i %s ", n, newargs[n]);
-	} 
-	printf("\n");
-		for(int n = 0; n <j; n++){
-		printf("%i %s ", n, newargs2[n]);
-	} 
-	printf("\n"); */
+	
 
 		if(sym == '&'){
 			pid_t cpid = 0;
@@ -308,18 +288,19 @@ void oneSym(char *line, char *line2, char sym){
 
 }
 
+//Two operators in the user input
 void twoSym(char *line, char *line2, char *line3, char sym1, char sym2){
 //////split line 1////////////////////////////////
 		char *split[20][20] = {NULL};
 		char *temp;
 
-			temp = strtok(line, " ");
-			int i = 0;
-			while(temp != NULL){
-				strcpy(split[i], temp);
-				i++;
-				temp = strtok(NULL, " ");
-			}
+		temp = strtok(line, " ");
+		int i = 0;
+		while(temp != NULL){
+			strcpy(split[i], temp);
+			i++;
+			temp = strtok(NULL, " ");
+		}
 
 		char *newargs[i];
 		newargs[i] = NULL;
@@ -327,9 +308,7 @@ void twoSym(char *line, char *line2, char *line3, char sym1, char sym2){
 		for(i = 0; i < x; i++){
 			
 			newargs[i] = malloc(strlen(split[i]) + 1);
-			
 			strcpy(newargs[i], split[i]);
-			
 			(newargs[i])[strlen(split[i])] = '\0';
 		}
 		//////split line 1////////////////////////////////
@@ -338,23 +317,21 @@ void twoSym(char *line, char *line2, char *line3, char sym1, char sym2){
 		char *split2[20][20] = {NULL};
 		char *temp2;
 
-			temp2 = strtok(line2, " ");
-			int j = 0;
-			while(temp2 != NULL){
-				strcpy(split2[j], temp2);
-				j++;
-				temp2 = strtok(NULL, " ");
-			}
+		temp2 = strtok(line2, " ");
+		int j = 0;
+		while(temp2 != NULL){
+			strcpy(split2[j], temp2);
+			j++;
+			temp2 = strtok(NULL, " ");
+		}
 
 		char *newargs2[j];
 		newargs2[j] = NULL;
-		 x =j;
+		x = j;
 		for(j = 0; j < x; j++){
 			
 			newargs2[j] = malloc(strlen(split2[j]) + 1);
-			
 			strcpy(newargs2[j], split2[j]);
-			
 			(newargs2[j])[strlen(split2[j])] = '\0';
 		}
 		//////split line 2////////////////////////////////
@@ -363,28 +340,26 @@ void twoSym(char *line, char *line2, char *line3, char sym1, char sym2){
 		char *split3[20][20] = {NULL};
 		char *temp3;
 
-			temp3 = strtok(line3, " ");
-			int b = 0;
-			while(temp3 != NULL){
-				strcpy(split3[b], temp3);
-				b++;
-				temp3 = strtok(NULL, " ");
-			}
+		temp3 = strtok(line3, " ");
+		int b = 0;
+		while(temp3 != NULL){
+			strcpy(split3[b], temp3);
+			b++;
+			temp3 = strtok(NULL, " ");
+		}
 
 		char *newargs3[b];
 		newargs3[b] = NULL;
-		 x =b;
+		x = b;
 		for(b = 0; b < x; b++){
 			
 			newargs3[b] = malloc(strlen(split3[b]) + 1);
-			
 			strcpy(newargs3[b], split3[b]);
-			
 			(newargs3[b])[strlen(split3[b])] = '\0';
 		}
 		//////split line 3////////////////////////////////
 
-	if(sym1 == '|' && sym2 == '|'){
+		if(sym1 == '|' && sym2 == '|'){
 			pid_t cpid[3] = {0};
 			int fd[2] = {0};
 			int ret = 0;
@@ -452,9 +427,9 @@ void twoSym(char *line, char *line2, char *line3, char sym1, char sym2){
 				printf("... child process (PID=%d) is waited/reaped\n", ret);
 			}	
 
-	}// tripple pipe
+		}// tripple pipe
 
-	if(sym1 == '<' && sym2 == '>'){
+		if(sym1 == '<' && sym2 == '>'){
 		
 			pid_t cpid = 0;
 
@@ -485,10 +460,11 @@ void twoSym(char *line, char *line2, char *line3, char sym1, char sym2){
 
 	
 
-	}// double arrow
+		}// double arrow
 
 }
 
+//attempts to handle ctrl c input
 void my_handler(int sig){
 	ctrlc = 1;
 	int ret = wait(NULL);
